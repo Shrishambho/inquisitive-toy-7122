@@ -5,81 +5,73 @@ import java.util.Scanner;
 
 public class Admin {
 
-	public static void showAdminMenu() {
-		System.out.println(CC.BLUE_BOLD_BRIGHT+"1.Add Plant.");
-		System.out.println("2.Update Plant.");
-		System.out.println("3.Delete Plant.");
-		System.out.println("4.View Plant.");
-		System.out.println("5.Add Seed.");
-		System.out.println("6.Update Seed.");
-		System.out.println("7.Delete Seed.");
-		System.out.println("8.View Seed.");
-		System.out.println("9.Add Planter.");
-		System.out.println("10.Update Planter.");
-		System.out.println("11.Delete Planter.");
-		System.out.println("12.View Planter.");
-		System.out.println("13.View Customer.");
-		System.out.println("14.Delete Customer.");
-		System.out.println("0.Exit"+CC.RESET);
+	//1.Admin Login
+	static void adminLogin(Scanner sc) {
+		System.out.print("Enter username:-");
+		String username=sc.next();
+		System.out.print("Enetr password:-");
+		String password=sc.next();
+		
+		if(username.toLowerCase().equals("admin")&&password.toLowerCase().equals("admin")) {
+			System.out.println(CC.GREEN_BOLD_BRIGHT+"Welcome Admin"+CC.RESET);
+			adminMenu(sc);
+		}
+		else {
+			System.out.println(CC.RED_BOLD+"Incorrect Username or Password"+CC.RESET);
+		}
 	}
 	
-	public static void adminMenu(Scanner sc) {
-//		int choice=0;
-//		
-//		do {
-//			
-//			try {
-//				showAdminMenu();
-//				System.out.print(CC.BLACK_BOLD_BRIGHT+"Enter Selection:-"+CC.RESET);
-//				choice =sc.nextInt();
-//				switch(choice) {
-//				case 1:
-//					break;
-//				case 2:
-//					break;
-//				case 3:
-//					break;
-//				case 4:
-//					break;
-//				case 5:
-//					break;
-//				default:
-//					System.out.println(CC.ORANGE_BACKGROUND+"Please Enter correct option."+CC.RESET);
-//				}
-//			}catch(InputMismatchException ex) {
-//				System.out.println(CC.RED_BOLD_BRIGHT+"Please Enetr an integer valur in range of 0-14"+CC.RESET);
-//			}
-//		}while(choice != 0);
-		
+	//2.Admin Menu.
+	
+	static void adminMenu(Scanner sc) {
 		int choice=0;
-		
 		do {
-			showAdminMenu();
-			System.out.print(CC.BLACK_BOLD_BRIGHT+"Enter Selection:-"+CC.RESET);
-			choice =sc.nextInt();
-			switch(choice) {
-			case 1:
-				System.out.println("shri");
-				break;
-			default:
-				System.out.println("Please Enter correct option.");
-				break;
+			
+			try {
+				displayAdminMenu();
+				System.out.print("Enter Selection:-");
+				choice =sc.nextInt();
+				switch(choice) {
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				case 4:
+					break;
+				default:
+					System.out.println(CC.ORANGE+"Please Enter Correct Option"+CC.RESET);
+				}
+			}catch(InputMismatchException ex) {
+				System.out.println(CC.RED_BOLD_BRIGHT+"Please Enter An Integer Value."+CC.RESET);
+				
 			}
+			
+			
 		}while(choice!=0);
 		
 		
 	}
-	public static void adminLogin(Scanner sc) {
-		System.out.print("Enter Username:-");
-		String username=sc.next();
-		System.out.print("Enter Password:-");
-		String password=sc.next();
-		if(username.toLowerCase().equals("admin")&&password.toLowerCase().equals("admin")) {
-			System.out.println(CC.GREEN_BOLD_BRIGHT+"Welcome Admin."+CC.RESET);
-			adminMenu(sc);
+	
+	
+	//3. Display Admin
+	static void displayAdminMenu() {
+		System.out.println(CC.GREEN_BOLD+"1.Add Plant."+CC.RESET);
+		System.out.println(CC.GREEN_BOLD+"2.Add Seed."+CC.RESET);
+		System.out.println(CC.GREEN_BOLD+"3.Add Planter"+CC.RESET);
+		System.out.println(CC.GREEN_BOLD+"4.Update Plant"+CC.RESET);
+		System.out.println(CC.GREEN_BOLD+"6.Update Seed."+CC.RESET);
+		System.out.println(CC.GREEN_BOLD+"7.Update Planter"+CC.RESET);
+		System.out.println(CC.GREEN_BOLD+"8.View Plant."+CC.RESET);
+		System.out.println(CC.GREEN_BOLD+"9.View Seed."+CC.RESET);
+		System.out.println(CC.GREEN_BOLD+"10.View Planter"+CC.RESET);
+		System.out.println(CC.GREEN_BOLD+"11.View Customers"+CC.RESET);
+		System.out.println(CC.RED_BOLD+"12.Delete Plant"+CC.RESET);
+		System.out.println(CC.RED_BOLD+"13.Delete Seed"+CC.RESET);
+		System.out.println(CC.RED_BOLD+"14.Delete Planter."+CC.RESET);
+		System.out.println(CC.RED_BOLD+"15.Delete Order"+CC.RESET);
 		}
-		else {
-			System.out.println(CC.RED_BOLD_BRIGHT+"Invalid Username or Password."+CC.RESET);
-		}
-	}
+	
+	
 }
