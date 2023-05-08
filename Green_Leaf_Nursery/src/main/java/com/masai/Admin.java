@@ -33,10 +33,13 @@ public class Admin {
 				choice =sc.nextInt();
 				switch(choice) {
 				case 1:
+					PlantUI.addPlant(sc);
 					break;
 				case 2:
+					SeedUI.addSeed(sc);
 					break;
 				case 3:
+//					PlanterUI.addPlanter(sc);
 					break;
 				case 4:
 					break;

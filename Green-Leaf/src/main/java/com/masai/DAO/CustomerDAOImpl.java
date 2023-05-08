@@ -1,0 +1,121 @@
+package com.masai.DAO;
+
+import java.util.List;
+
+import com.masai.Entity.Customer;
+import com.masai.Entity.LoggedInUserId;
+import com.masai.Exception.NoRecordFoundException;
+import com.masai.Exception.SomeThingWentWrongException;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.PersistenceException;
+import jakarta.persistence.Query;
+
+public class CustomerDAOImpl implements CustomerDAO {
+
+	public void addCustomer(Customer cst) throws SomeThingWentWrongException {
+		
+		EntityManager em=null;
+		try {
+			
+			em=EMUtils.getEntityManager();
+			
+			Query query=em.createQuery("select count(C) from Customer C where C.username=:username");
+			query.setParameter("username", cst.getUsername());
+			if((Long)query.getSingleResult()>0) {
+				throw new SomeThingWentWrongException("The username "+cst.getUsername()+" is already used.");
+			}
+			EntityTransaction et = em.getTransaction();
+			et.begin();
+			em.persist(cst);
+			et.commit();
+			
+		}catch(PersistenceException ex) {
+			throw new SomeThingWentWrongException("Please try again later.");
+		}finally {
+			em.close();
+		}
+		
+	}
+
+	
+	public Customer findCustomer(String username) throws SomeThingWentWrongException, NoRecordFoundException {
+		EntityManager em=null;
+		Customer cus=null;
+		try {
+			em=EMUtils.getEntityManager();
+			Query query=em.createQuery("select C from Customer C where C.username=:username");
+			query.setParameter("username", username);
+			cus=(Customer)query.getSingleResult();
+			if(cus==null) {
+				throw new NoRecordFoundException("No customerAvilable");
+			}
+		}catch(IllegalArgumentException ex) {
+			throw new SomeThingWentWrongException("please try agian latter.");
+		}
+		finally {
+			em.close();
+		}
+		return cus;
+	}
+
+	@Override
+	public void updateCustomer(Customer customer) throws SomeThingWentWrongException, NoRecordFoundException {
+		EntityManager em=null;
+		try {
+			em=EMUtils.getEntityManager();
+			Customer cus=em.find(Customer.class, customer.getId());
+			if(cus==null) {
+				throw new NoRecordFoundException("No customer find");
+			}
+			if(!cus.getUsername().equals(customer.getUsername())) {
+				Query query=em.createQuery("SELECT count(c) from Customer c where username=:username");
+				query.setParameter(0, customer.getUsername());
+				if((Long)query.getSingleResult()>0) {
+					throw new SomeThingWentWrongException("User name already used please choose another username.");
+				}
+			}
+			EntityTransaction et = em.getTransaction();
+			et.begin();
+			cus.setUsername(customer.getUsername());
+			cus.setName(customer.getName());
+			cus.setAddress(customer.getAddress());
+            
+			et.commit();
+			
+		}catch(PersistenceException ex) {
+			ex.printStackTrace();
+			throw new SomeThingWentWrongException("please try agian latter.");
+		}finally {
+			em.close();
+		}
+		
+	}
+
+
+	@Override
+	public void customerLogin(String username, String password) throws SomeThingWentWrongException {
+		EntityManager em=null;
+		try {
+			em=EMUtils.getEntityManager();
+			Query query = em.createQuery("SELECT c.id FROM Customer c WHERE username = :username AND password = :password AND isDeleted = 0");
+			query.setParameter("username", username);
+			query.setParameter("password", password);
+			List<Integer> listInt = (List<Integer>)query.getResultList();
+			if(listInt.size() == 0) {
+				//you are here means company with given name exists so throw exceptions
+				throw new SomeThingWentWrongException("The username or password is incorrect");
+			}
+			LoggedInUserId.loggedInUserId = listInt.get(0);
+		}catch(PersistenceException ex) {
+			throw new SomeThingWentWrongException("Unable to process request, try again later");
+		}finally{
+			em.close();
+		}
+			
+			
+		
+		
+	}
+}
