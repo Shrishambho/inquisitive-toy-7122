@@ -27,6 +27,7 @@ public class App
         		case 2:
         			break;
         		case 3:
+        			CustomerUI.addCustomer(sc);
         			break;
         		case 0:
         			break;
