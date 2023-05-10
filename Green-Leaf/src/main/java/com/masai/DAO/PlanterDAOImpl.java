@@ -1,6 +1,7 @@
 package com.masai.DAO;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.masai.Entity.Plant;
@@ -12,6 +13,7 @@ import com.masai.Exception.SomeThingWentWrongException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceException;
+import jakarta.persistence.Query;
 
 public class PlanterDAOImpl implements PlanterDAO {
 
@@ -70,6 +72,25 @@ public class PlanterDAOImpl implements PlanterDAO {
 			em.close();
 		}
 		
+	}
+
+
+	@Override
+	public List<Planter> getAllPlanters() throws SomeThingWentWrongException {
+		List<Planter> list=null;
+		EntityManager em=null;
+		try {
+			em=EMUtils.getEntityManager();
+			
+			Query query=em.createQuery("select c from Planter c");
+			list=query.getResultList();
+			
+		}catch(PersistenceException ex) {
+			throw new SomeThingWentWrongException("Unable to process request, try again later");
+		}finally {
+			em.close();
+		}
+		return list;
 	}
 
 }

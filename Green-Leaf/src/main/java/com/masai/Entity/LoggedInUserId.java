@@ -3,4 +3,5 @@ package com.masai.Entity;
 public class LoggedInUserId {
 
 	static public long loggedInUserId;
+	public static String name;
 }

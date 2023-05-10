@@ -3,6 +3,7 @@ package com.masai.Entity;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,7 +24,8 @@ public class Planter {
 	private String planterShape;
 	private int planterStock;
 	private double planterCost;
-	
+	@Column(name = "is_buyed", nullable = false)
+	private int isDeleted;
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="planterId")
 	private Set<Plant> plant;

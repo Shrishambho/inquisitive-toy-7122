@@ -1,9 +1,13 @@
 package com.masai.UI;
 
+import java.util.List;
 import java.util.Scanner;
 
+import com.masai.DAO.PlantDAO;
+import com.masai.DAO.PlantDAOImpl;
 import com.masai.DAO.PlanterDAO;
 import com.masai.DAO.PlanterDAOImpl;
+import com.masai.Entity.Plant;
 import com.masai.Entity.Planter;
 import com.masai.Exception.SomeThingWentWrongException;
 import com.masai.Exception.NoRecordFoundException;
@@ -54,5 +58,17 @@ public class PlanterUI {
 			System.out.println(ex.getMessage());
 		}
 	}
+	
+	static void getPlanter() {
+		try {
+			PlanterDAO pl=new PlanterDAOImpl();
+			List<Planter> list=pl.getAllPlanters();
+			list.forEach(i->System.out.println("Planter id:-"+i.getPlanterId()+"Planter Height:- "+i.getHeight()+"Planters Drinage Holes "+i.getDrinageHoles()+"Planters capacity:-"+i.getCapacity()+
+					"Planters cost:-"+i.getPlanterCost()));
+		}catch(SomeThingWentWrongException ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	
 	
 }

@@ -44,7 +44,20 @@ public class App
                
 				break;
 			case 7:
-				PlanterUI.updatePlanter(sc);
+				
+				break;
+			case 8:
+				PlantUI.getPlant();
+				break;
+			case 9:
+				SeedUI.getSeed();
+				break;
+			case 10:
+			     PlanterUI.getPlanter();
+			     break;
+			case 11:
+				CustomerUI.getCustomerList();
+				break;
 			case 0:
 				System.out.println("Bye Bye Admin.");
 				break;
