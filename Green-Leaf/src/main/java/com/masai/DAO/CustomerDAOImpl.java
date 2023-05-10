@@ -1,5 +1,6 @@
 package com.masai.DAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.masai.Entity.Customer;
@@ -99,15 +100,16 @@ public class CustomerDAOImpl implements CustomerDAO {
 		EntityManager em=null;
 		try {
 			em=EMUtils.getEntityManager();
-			Query query = em.createQuery("SELECT c.id FROM Customer c WHERE username = :username AND password = :password AND isDeleted = 0");
+			Query query = em.createQuery("SELECT c FROM Customer c WHERE username = :username AND password = :password AND isDeleted = 0");
 			query.setParameter("username", username);
 			query.setParameter("password", password);
-			List<Integer> listInt = (List<Integer>)query.getResultList();
-			if(listInt.size() == 0) {
+			Customer cus=(Customer)query.getSingleResult();
+			if(cus==null) {
 				//you are here means company with given name exists so throw exceptions
 				throw new SomeThingWentWrongException("The username or password is incorrect");
 			}
-			LoggedInUserId.loggedInUserId = listInt.get(0);
+			LoggedInUserId.loggedInUserId = cus.getId();
+			LoggedInUserId.name = cus.getName();
 		}catch(PersistenceException ex) {
 			throw new SomeThingWentWrongException("Unable to process request, try again later");
 		}finally{
@@ -117,5 +119,24 @@ public class CustomerDAOImpl implements CustomerDAO {
 			
 		
 		
+	}
+
+
+	@Override
+	public List<Customer> getAllCustomer() throws SomeThingWentWrongException {
+		List<Customer> list=null;
+		EntityManager em=null;
+		try {
+			em=EMUtils.getEntityManager();
+			
+			Query query=em.createQuery("select c from Customer c");
+			list=query.getResultList();
+			
+		}catch(PersistenceException ex) {
+			throw new SomeThingWentWrongException("Unable to process request, try again later");
+		}finally {
+			em.close();
+		}
+		return list;
 	}
 }

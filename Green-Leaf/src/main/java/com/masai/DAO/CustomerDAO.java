@@ -1,5 +1,7 @@
 package com.masai.DAO;
 
+import java.util.List;
+
 import com.masai.Entity.Customer;
 import com.masai.Entity.Plant;
 import com.masai.Exception.NoRecordFoundException;
@@ -11,6 +13,6 @@ public interface CustomerDAO {
 	public Customer findCustomer(String username)throws SomeThingWentWrongException,NoRecordFoundException;
 	public void updateCustomer(Customer customer)throws SomeThingWentWrongException,NoRecordFoundException;
 	public void customerLogin(String username, String password)throws SomeThingWentWrongException;
-	
+	public List<Customer> getAllCustomer() throws SomeThingWentWrongException;
 	
 }

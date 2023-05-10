@@ -1,5 +1,8 @@
 package com.masai.DAO;
 
+import java.util.List;
+
+import com.masai.Entity.Customer;
 import com.masai.Entity.Plant;
 import com.masai.Exception.NoRecordFoundException;
 import com.masai.Exception.SomeThingWentWrongException;
@@ -48,5 +51,22 @@ public class PlantDAOImpl implements PlantDAO{
 			em.close();
 		}
 		return cus;
+	}
+
+	public List<Plant> getAllPlants() throws SomeThingWentWrongException {
+		List<Plant> list=null;
+		EntityManager em=null;
+		try {
+			em=EMUtils.getEntityManager();
+			
+			Query query=em.createQuery("select c from Plant c");
+			list=query.getResultList();
+			
+		}catch(PersistenceException ex) {
+			throw new SomeThingWentWrongException("Unable to process request, try again later");
+		}finally {
+			em.close();
+		}
+		return list;
 	}
 }

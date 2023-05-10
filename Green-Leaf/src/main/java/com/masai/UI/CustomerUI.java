@@ -1,11 +1,13 @@
 package com.masai.UI;
 
+import java.util.List;
 import java.util.Scanner;
 
 import com.masai.DAO.CustomerDAO;
 import com.masai.DAO.CustomerDAOImpl;
 import com.masai.Entity.Address;
 import com.masai.Entity.Customer;
+import com.masai.Entity.LoggedInUserId;
 import com.masai.Exception.NoRecordFoundException;
 import com.masai.Exception.SomeThingWentWrongException;
 
@@ -58,13 +60,40 @@ public class CustomerUI {
 	  
 	}
 	static void displayCustomerMenu() {
-		System.out.println("1.here");
+		System.out.println("1.View All Plants.");
+		System.out.println("2.View All Seeds.");
+		System.out.println("3.View All Planters.");
+		System.out.println("4.Buy plant and planter.");
+		System.out.println("5.Buy planter and seed.");
+		System.out.println("6.Buy planter.");
 		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
+	}
+	
+	static void customerMenu(Scanner sc) {
+		int choice=0;
+		do {
+			System.out.print("Enter Selection:-");
+			choice=sc.nextInt();
+			switch(choice) {
+			case 1:
+				PlantUI.getPlant();
+				break;
+			case 2:
+				SeedUI.getSeed();
+				break;
+			case 3:
+				PlanterUI.getPlanter();
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			default:
+				System.out.println("Choose correct option.");
+			}
+			
+			
+		}while(choice!=0);
 	}
 	static void customerLogin(Scanner sc) {
 		System.out.print("Enter Username:-");
@@ -76,7 +105,19 @@ public class CustomerUI {
 		try {
 			CustomerDAO cus=new CustomerDAOImpl();
 			cus.customerLogin(user, pass);
-			displayCustomerMenu();
+			System.out.println("Welcome "+LoggedInUserId.name);
+			customerMenu(sc);
+		}catch(SomeThingWentWrongException ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	
+	static void getCustomerList() {
+		try {
+			CustomerDAO cus=new CustomerDAOImpl();
+			List<Customer> list=cus.getAllCustomer();
+			list.forEach(i->System.out.println("Customer ID:- "+i.getId()+" Name :-"+i.getName()+" username:-"+i.getUsername()
+			+" password:-"+i.getPassword()+" city:-"+i.getAddress().getCity()+" state:- "+i.getAddress().getState()+" zipcode:-"+i.getAddress().getZipcode()));
 		}catch(SomeThingWentWrongException ex) {
 			System.out.println(ex.getMessage());
 		}

@@ -1,9 +1,13 @@
 package com.masai.UI;
 
+import java.util.List;
 import java.util.Scanner;
 
+import com.masai.DAO.PlantDAO;
+import com.masai.DAO.PlantDAOImpl;
 import com.masai.DAO.SeedDAO;
 import com.masai.DAO.SeedDAOImpl;
+import com.masai.Entity.Plant;
 import com.masai.Entity.Seed;
 import com.masai.Exception.SomeThingWentWrongException;
 
@@ -44,4 +48,15 @@ static void addSeed(Scanner sc) {
 			System.out.println(ex.getMessage());
 		}
 	}
+
+static void getSeed() {
+	try {
+		SeedDAO sd=new SeedDAOImpl();
+		List<Seed> list=sd.getAllSeeds();
+		list.forEach(i->System.out.println("Seed ID:- "+i.getSeedId()+" Name :-"+i.getCommonName()+" cost :-"+i.getSeedsCost()+" Available stock :-"+i.getSeedsStock()+"seed per packet :-"+i.getSeedsPerPacket()));
+	}catch(SomeThingWentWrongException ex) {
+		System.out.println(ex.getMessage());
+	}
+}
+
 }

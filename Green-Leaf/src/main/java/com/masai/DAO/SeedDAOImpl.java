@@ -1,5 +1,8 @@
 package com.masai.DAO;
 
+import java.util.List;
+
+import com.masai.Entity.Plant;
 import com.masai.Entity.Seed;
 import com.masai.Exception.SomeThingWentWrongException;
 
@@ -32,4 +35,22 @@ public void addSeed(Seed seed) throws SomeThingWentWrongException {
 		
 		
 	}
+
+@Override
+public List<Seed> getAllSeeds() throws SomeThingWentWrongException {
+	List<Seed> list=null;
+	EntityManager em=null;
+	try {
+		em=EMUtils.getEntityManager();
+		
+		Query query=em.createQuery("select c from Seed c");
+		list=query.getResultList();
+		
+	}catch(PersistenceException ex) {
+		throw new SomeThingWentWrongException("Unable to process request, try again later");
+	}finally {
+		em.close();
+	}
+	return list;
+}
 }

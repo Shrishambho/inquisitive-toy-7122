@@ -1,9 +1,13 @@
 package com.masai.UI;
 
+import java.util.List;
 import java.util.Scanner;
 
+import com.masai.DAO.CustomerDAO;
+import com.masai.DAO.CustomerDAOImpl;
 import com.masai.DAO.PlantDAO;
 import com.masai.DAO.PlantDAOImpl;
+import com.masai.Entity.Customer;
 import com.masai.Entity.Plant;
 import com.masai.Exception.SomeThingWentWrongException;
 
@@ -47,4 +51,16 @@ public class PlantUI {
 			System.out.println(ex.getMessage());
 		}
 	 }
+	
+	
+	
+	static void getPlant() {
+		try {
+			PlantDAO pl=new PlantDAOImpl();
+			List<Plant> list=pl.getAllPlants();
+			list.forEach(i->System.out.println("Plant ID:- "+i.getPlantId()+" Name :-"+i.getCommonName()+" cost :-"+i.getCost()+" Available stock :-"+i.getPlantStock()+""));
+		}catch(SomeThingWentWrongException ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
 }
