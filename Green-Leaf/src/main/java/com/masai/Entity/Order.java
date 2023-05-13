@@ -24,8 +24,7 @@ public class Order {
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "planter_id")
+	@Auto
 	private Planter planter;
 	
 	@Column(name = "date_of_purchase", nullable = false)
