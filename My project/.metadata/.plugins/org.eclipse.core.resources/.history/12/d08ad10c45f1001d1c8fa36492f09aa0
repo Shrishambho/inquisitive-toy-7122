@@ -1,0 +1,14 @@
+package com.masai.DAO;
+
+import com.masai.Exception.SomeThingWentWrongException;
+
+public class OrderDAOImpl implements OrderDAO {
+
+	@Override
+	public void placeOrder(int plantId, int seedId, int planterId) throws SomeThingWentWrongException {
+	
+		
+	}
+
+	
+}

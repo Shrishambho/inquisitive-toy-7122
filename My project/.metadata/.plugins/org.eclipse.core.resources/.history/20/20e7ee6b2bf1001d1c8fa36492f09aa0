@@ -1,0 +1,43 @@
+package com.masai.Nursery;
+
+import java.util.Scanner;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+    	Scanner sc=new Scanner(System.in);
+        int choice=0;
+       do {
+    	System.out.println("Welcome To Green Leaf Nursery!");
+    	System.out.println("1.Admin Login.");
+       	System.out.println("2.Customer Login.");
+       	System.out.println("3.Customer Registration.");
+       	System.out.println("0.Exit");
+       	System.out.print("Enter Selection:-");
+       	choice=sc.nextInt();
+       	
+       	switch(choice) {
+       	case 1:
+       		adminLogin(sc);
+       		break;
+       	case 2:
+       		CustomerUI.customerLogin(sc);
+       		break;
+       	case 3:
+       		CustomerUI.addCustomer(sc);
+       		break;
+       	case 0:
+       		System.out.println("Thank You.");
+       	}
+       	
+       }while(choice !=0);
+        
+        
+    }
+    
+}

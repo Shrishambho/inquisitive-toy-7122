@@ -1,0 +1,112 @@
+package com.masai.Entity;
+
+import java.util.Set;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+
+@Entity
+public class Plant {
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int plantId;
+	private String plantName;
+	private String medicineOrOrdinaryUse;
+	private String description;
+	private int isBuyed;
+	private int quantity;
+	private double cost;
+	
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="planter_Id",joinColumns= {@JoinColumn(referencedColumnName="plantId")},inverseJoinColumns= {@JoinColumn(referencedColumnName="planterId")})
+	private Set<Planter> planter;
+
+	public Plant() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Plant(String plantName, String medicineOrOrdinaryUse, String description, int quantity, double cost,
+			Set<Planter> planter) {
+		super();
+		this.plantName = plantName;
+		this.medicineOrOrdinaryUse = medicineOrOrdinaryUse;
+		this.description = description;
+		this.quantity = quantity;
+		this.cost = cost;
+		this.planter = planter;
+	}
+
+	public int getPlantId() {
+		return plantId;
+	}
+
+	public void setPlantId(int plantId) {
+		this.plantId = plantId;
+	}
+
+	public String getPlantName() {
+		return plantName;
+	}
+
+	public void setPlantName(String plantName) {
+		this.plantName = plantName;
+	}
+
+	public String getMedicineOrOrdinaryUse() {
+		return medicineOrOrdinaryUse;
+	}
+
+	public void setMedicineOrOrdinaryUse(String medicineOrOrdinaryUse) {
+		this.medicineOrOrdinaryUse = medicineOrOrdinaryUse;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public int getIsBuyed() {
+		return isBuyed;
+	}
+
+	public void setIsBuyed(int isBuyed) {
+		this.isBuyed = isBuyed;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public double getCost() {
+		return cost;
+	}
+
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
+
+	public Set<Planter> getPlanter() {
+		return planter;
+	}
+
+	public void setPlanter(Set<Planter> planter) {
+		this.planter = planter;
+	}
+	
+	
+}

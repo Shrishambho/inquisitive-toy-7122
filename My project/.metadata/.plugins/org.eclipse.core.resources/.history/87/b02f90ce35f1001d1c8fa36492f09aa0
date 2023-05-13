@@ -1,0 +1,9 @@
+package com.masai.Entity;
+
+import jakarta.persistence.Entity;
+
+@Entity
+public class Planter {
+ 
+	private int planterId;
+}

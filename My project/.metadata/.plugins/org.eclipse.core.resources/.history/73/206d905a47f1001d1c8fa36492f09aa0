@@ -1,0 +1,32 @@
+package com.masai.DAO;
+
+import com.masai.Entity.Plant;
+import com.masai.Entity.Planter;
+import com.masai.Entity.Seed;
+import com.masai.Exception.SomeThingWentWrongException;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceException;
+
+public class OrderDAOImpl implements OrderDAO {
+
+	@Override
+	public void placeOrder(int plantId, int seedId, int planterId) throws SomeThingWentWrongException {
+//	System.out.println(plantId);
+//	System.out.println(seedId);
+//	System.out.println(planterId);
+	
+	EntityManager em=null;
+	try {
+		em=EMUtils.getEntityManager();
+		Plant plant=em.find(Plant.class, plantId);
+		Seed seed=em.find(Seed.class, seedId);
+		Planter planter=em.find(Planter.class, planterId);
+		Customer cus=em.find(null, planter)
+	}catch(PersistenceException ex) {
+		throw new SomeThingWentWrongException("something went wrong");
+	}
+	}
+
+	
+}

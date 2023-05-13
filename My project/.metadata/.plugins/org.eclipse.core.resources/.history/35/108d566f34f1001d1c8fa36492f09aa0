@@ -1,0 +1,31 @@
+package com.masai.Entity;
+
+import java.util.Set;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+
+@Entity
+public class Seed {
+    @Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int seedId;
+	private String seedName;
+	private int isBuyed;
+    private String medicineOrOrdinaryUse;
+    private String description;
+    private int seedStock;
+    private double cost;
+    private int seedsPerPacket;
+    
+    @ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="planter_Id",joinColumns= {@JoinColumn(referencedColumnName="planterId")},inverseJoinColumns= {@JoinColumn(referencedColumnName="seedId")})
+	private Set<Planter> planter;
+    
+}

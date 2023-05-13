@@ -1,0 +1,128 @@
+package com.masai.Nursery;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.masai.DAO.CustomerDAO;
+import com.masai.DAO.CustomerDAOImpl;
+import com.masai.Entity.Address;
+import com.masai.Entity.Customer;
+import com.masai.Entity.LoggedInUserId;
+import com.masai.Exception.NoRecordFoundException;
+import com.masai.Exception.SomeThingWentWrongException;
+
+public class CustomerUI {
+
+
+	static void addCustomer(Scanner sc) {
+		System.out.print("Enter Name:-");
+		String name=sc.next();
+		
+		System.out.print("Enter UserName:-");
+		String username=sc.next();
+		
+		System.out.print("Enter PassWord:-");
+		String password=sc.next();
+		
+		System.out.print("Enter city name:-");
+		String city=sc.next();
+		
+		System.out.print("Enter state name:-");
+		String state=sc.next();
+		
+		System.out.print("Enetr zip code:-");
+		int zip=sc.nextInt();
+		
+		Address address=new Address(city,state,zip);
+		
+		Customer customer=new Customer(name,username,password,address,null);
+		
+		try {
+			CustomerDAO cus=new CustomerDAOImpl();
+			cus.addCustomer(customer);
+			System.out.println("Customer added successfully.");
+		}catch(SomeThingWentWrongException ex) {
+			System.out.println(ex.getMessage());
+		}
+		
+	}
+	static void findCustomer(Scanner sc) {
+	  System.out.print("Enter commonname:- ");
+	  String commonName=sc.next();
+	  
+	  try {
+			CustomerDAO cus=new CustomerDAOImpl();
+			Customer cf=cus.findCustomer(commonName);
+			
+			System.out.println(cf.getName());
+		}catch(SomeThingWentWrongException | NoRecordFoundException ex) {
+			System.out.println(ex.getMessage());
+		}
+	  
+	}
+	static void displayCustomerMenu() {
+		System.out.println("1.View All Plants.");
+		System.out.println("2.View All Seeds.");
+		System.out.println("3.View All Planters.");
+		System.out.println("4.Buy plant and planter.");
+		System.out.println("5.Buy planter and seed.");
+		System.out.println("6.Buy planter.");
+		System.out.println();
+	}
+	
+	static void customerMenu(Scanner sc) {
+		int choice=0;
+		do {
+			displayCustomerMenu();
+			System.out.print("Enter Selection:-");
+			choice=sc.nextInt();
+			switch(choice) {
+			case 1:
+//				PlantUI.getPlant();
+				break;
+			case 2:
+//				SeedUI.getSeed();
+				break;
+			case 3:
+//				PlanterUI.getPlanter();
+				break;
+			case 4:
+				OrderUI.placeOrder(sc);
+				break;
+			case 5:
+				break;
+			default:
+				System.out.println("Choose correct option.");
+			}
+			
+			
+		}while(choice!=0);
+	}
+	static void customerLogin(Scanner sc) {
+		System.out.print("Enter Username:-");
+		String user=sc.next();
+		
+		System.out.print("Enter Password:-");
+		String pass=sc.next();
+		
+		try {
+			CustomerDAO cus=new CustomerDAOImpl();
+			cus.customerLogin(user, pass);
+			System.out.println("Welcome "+LoggedInUserId.name);
+			customerMenu(sc);
+		}catch(SomeThingWentWrongException ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	
+	static void getCustomerList() {
+		try {
+			CustomerDAO cus=new CustomerDAOImpl();
+			List<Customer> list=cus.getAllCustomer();
+			list.forEach(i->System.out.println("Customer ID:- "+i.getId()+" Name :-"+i.getName()+" username:-"+i.getUsername()
+			+" password:-"+i.getPassword()+" city:-"+i.getAddress().getCity()+" state:- "+i.getAddress().getState()+" zipcode:-"+i.getAddress().getZipcode()));
+		}catch(SomeThingWentWrongException ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+}
